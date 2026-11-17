@@ -22,7 +22,7 @@ def args(v):
     res, implicit = [], 0
     for m in arg_re.finditer(v):
         if m.group(2) is None: idx = implicit; implicit += 1
-        else: idx = int(m.group(2))
+        else: idx = int(m.group(2)) - 1  # %1$@ is the first argument
         res.append((idx, m.group(3)))
     return res
 plural = re.compile(r'^(.*?)_(0|1|2|3_10|many|any)$')

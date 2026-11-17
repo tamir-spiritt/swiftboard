@@ -1,0 +1,36 @@
+{
+ "files": [
+  "TelegramUIPreferences/Sources/PresentationThemeSettings.swift",
+  "TelegramUIPreferences/Sources/PostboxKeys.swift",
+  "TelegramUIPreferences/Sources/BubblelessThemeSettings.swift",
+  "TelegramUIPreferences/Sources/CallListSettings.swift",
+  "TelegramUIPreferences/Sources/ChatSettings.swift",
+  "TelegramUIPreferences/Sources/ExperimentalUISettings.swift",
+  "TelegramUIPreferences/Sources/InAppNotificationSettings.swift",
+  "TelegramUIPreferences/Sources/MediaAutoDownloadSettings.swift",
+  "TelegramUIPreferences/Sources/MediaDisplaySettings.swift",
+  "TelegramUIPreferences/Sources/MediaInputSettings.swift",
+  "TelegramUIPreferences/Sources/ContactSynchronizationSettings.swift",
+  "TelegramUIPreferences/Sources/StickerSettings.swift"
+ ],
+ "extract": {
+  "TelegramCore/Sources/AccountManager/AccountRecord.swift": [
+   "AccountRecordId"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Utils/EnginePostboxCoding.swift": [
+   "EngineAdaptedPostboxDecoder",
+   "EngineAdaptedPostboxEncoder",
+   "EngineMemoryBuffer",
+   "EnginePostboxCoding",
+   "EnginePostboxDecoder",
+   "EnginePostboxEncoder",
+   "EngineRawMediaResourceId"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Preferences/TelegramEnginePreferences.swift": [
+   "EnginePreferencesEntry"
+  ],
+  "TelegramCore/Sources/TelegramEngine/ItemCache/TelegramEngineItemCache.swift": [
+   "EngineDataBuffer"
+  ]
+ }
+}

@@ -49,7 +49,7 @@ begins cancels the view's touches; wheel finds sibling scrollers (ListView keeps
 
 ## Layer 3: chat list (Part B)
 
-Built (`build-chatlist.sh`, module list in `chatlist-stubs/MODULES`):
+Built (`build-chatlist.sh`, module list in `shims/chatlist/MODULES`):
 - Real Telegram code compiled to wasm: Display (all), ComponentFlow (all 32 files), HierarchyTrackingLayer,
   PeerOnlineMarkerNode, TelegramPresentationData subset (PresentationTheme, DefaultDayPresentationTheme,
   PresentationsResourceCache, PresentationResourceKey, PresentationResourcesChatList, PresentationResourcesItemList),
@@ -67,3 +67,78 @@ symbols, mostly TelegramCore's engine types (EnginePeer, EngineMessage, EngineCh
 TelegramUser/media classes), AccountContext, AvatarNode, TextFormat/TelegramStringFormatting helpers and component
 modules (EmojiStatusComponent, GlassBackgroundComponent, MultilineText*). Next step: write those stubs (or compile the
 real UI ones: AvatarNode, ShimmerEffect, TextNodeWithEntities) and swap the demo row for ChatListItemNode.
+
+## Layer 3b: toward the real ChatListItemNode (on-par round, 2026-11-17)
+
+### Size (task 2), chat list wasm
+
+| Step | raw | gzip |
+|---|---|---|
+| before (-Osize, --strip-all) | 58.0 MB | 20.3 MB |
+| + ICU data trimmed to root/en (`platform/tools/icu-trim.py`, 34 MB -> 3.8 MB of data) | 27.8 MB | 8.2 MB |
+| + wasm-opt -Oz (binaryen 123) | 19.6 MB | 6.9 MB |
+
+Verified in node (reactor runner) and Chromium after each step: 10 chats, tap selects.
+
+### Approach: real upstream code, closure-driven
+
+`tools/closure.py` type-checks a module (shim + real files + extracted declarations), maps each missing name to the
+upstream file declaring it (local) and adds the whole file (when the path matches the
+module's allow pattern) or extracts just that declaration verbatim (`tools/assemble.py`). Names declared in another
+module are routed into that module's `<Module>.closure.json`. `tools/drop-decls.py` removes members that need the
+network/API layer (`Api.`, `account: Account`, `postbox: Postbox`, `transaction: Transaction`, `MTRpcError` ...).
+`tools/rebuild-closures.sh` iterates in dependency order until stable.
+
+### Error counts per round
+
+| Round | Module | errors |
+|---|---|---|
+| 0 | ChatListItem.swift vs hand stubs (start) | 328 |
+| 1 | Postbox (23 real files) | 21 -> 7 -> 9 -> 0 |
+| 2 | TelegramCore SyncCore closure, FlatBuffers dropped | 411 -> 388 -> 0 (but serialization gutted) |
+| 3 | TelegramCore with real FlatBuffers runtime + flatc-generated models | 265 -> 106 -> 56 -> 32 -> 16 -> 10 -> 0 |
+| 4 | TelegramUIPreferences | 20 -> 1 -> 0 |
+| 5 | TelegramPresentationData (16 real files) | 46 -> 18 -> 6 -> 1 -> 0 |
+| 6 | TextFormat (first pass) | 33 |
+| 7 | TextFormat (time_t, NSDataDetector, attachments, strings arg fix) | 33 -> 19 -> 14 -> 12 -> 0 |
+| 8 | TelegramStringFormatting (MapKit/CoreLocation, PlatformRestrictionMatching) | 363 -> 339 -> 330 -> 0 |
+| 9 | AccountContext (protocol shim + WebAccountContext, real value types) | 11 -> 0 |
+| 10 | EmojiTextAttachmentView / TextNodeWithEntities / MultilineTextWithEntitiesComponent / EmojiStatusComponent | 8 / 2 / 14 / 2 -> 0 |
+| 11 | AvatarNode (real: AvatarNode, PeerAvatar, AvatarBadgeView) | 20 -> 6 -> 0 |
+| 12 | ChatListItem.swift (ChatListUI module) | 328 -> 81 -> 30 -> 19 -> 5 -> 3 -> 2 -> 1 |
+
+Remaining: 1 error, a compiler "failed to produce diagnostic" at the start of ChatListItemNode.asyncLayout's
+returned closure (2,000+ lines). The real error inside is hidden by multi-statement closure inference; diagnosis copies
+the body into a typed local function so statements check one by one (local).
+
+## Real ChatListItemNode in the browser (round 13)
+
+- Run 1 trapped in `Bundle.main` (WASI has no executable path): upstream `defaultPresentationStrings` reads
+  Localizable.strings through `getAppBundle()`. The web build compiles the same strings, so the shim defines the value
+  and assemble.py drops the upstream line.
+- Run 2: `[swift] chat list started with 10 chats: 10 rows are ChatListUI.ChatListItemNode (real Telegram cell), 0 other`.
+- Read checks drew a single tick: ChatListStatusChecksNode draws both ticks with `setBlendMode(.copy)`, and canvas
+  'copy' clears everything outside the painted shape. The host now emulates CG copy (punch shape, paint source-over).
+- Tap: ChatListItem.selected calls `interaction.messageSelected` for a chat with a message; the shim had it as a no-op.
+  Now: `[swift] chat selected (ChatListItem.selected -> messageSelected): Design Team, last message: ...`.
+- Chromium (publishing-layout harness): (local)
+
+## Release build of the real-cell chat list (round 14)
+
+Same pipeline as round 10 (-Osize modules, ICU data trimmed to root/en, wasm-opt -Oz from binaryen 123):
+
+| Step | raw | gzip |
+|---|---|---|
+| linked (-Osize, --strip-all, trimmed ICU) | 33.0 MB | 9.7 MB |
+| + wasm-opt -Oz | 22.8 MB | 8.0 MB |
+
+The real cell pulls in ~30 more real Telegram modules than the hand-written row did (round 10: 19.6 MB / 6.9 MB).
+Assets: 87 of the 91 bundle images referenced by the compiled sources are exported (`tools/gen-assets.py`); the chat
+list's muted, pinned, verified and badge icons render from them.
+
+- Fix: the `.byWords` rewrite now matches only the NSString form (Display's `String.enumerateSubstrings` keeps the
+  StringProtocol overload); build-web.sh stops when a base module fails instead of linking stale objects (that mix
+  trapped with "null function or function signature mismatch").
+- Chromium, publishing-layout harness: `[swift] chat list started with 10 chats: 10 rows are ChatListUI.ChatListItemNode
+  (real Telegram cell), 0 other`; wheel + drag scroll; tap -> `ChatListItem.selected -> messageSelected: Design Team`.
+  Shots: (local) (copied to (local).

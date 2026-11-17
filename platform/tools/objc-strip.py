@@ -4,7 +4,8 @@
 #   objc-strip.py IN OUT [--import Mod ...]
 #
 # - drops @objc / @objc(name) / @nonobjc / @objcMembers / @IBAction / @IBOutlet / @IBInspectable
-# - #selector(Type.method(_:)) / #selector(self.method) -> Selector("method(_:)", Type.method(_:)) / Self.method
+# - #selector(Type.method(_:)) / #selector(self.method) -> Selector("method(_:)", Type.method(_:)) / Self.method;
+#   #selector(variable.method) -> Selector("method", webMethodOf(variable) { $0.method })
 #   (WebCompat's Selector keeps a type-checked invoker, so target/action works without the ObjC runtime)
 # - `x.method?(...)` -> `x.method(...)` for ObjC optional protocol requirements (objc-optional-methods.txt): the
 #   platform protocols declare them as requirements with default implementations
@@ -12,6 +13,10 @@
 # - `x as NSNumber` -> `x as Any as! NSNumber` (numeric bridging coercion needs ObjC interop)
 # - `NSMutableString()`/`NSAttributedString()` -> `(string: "")` (missing in corelibs Foundation)
 # - `import UIKit.Submodule` -> `import UIKit`
+# - `: time_t = Int(` -> `: time_t = time_t(` (time_t is Int on Darwin, Int64 on WASI)
+# - `(x as NSString).enumerateSubstrings(in: NSMakeRange(..), options: [.byWords ...])` -> `webEnumerateSubstrings`/`.webByWords`
+#   (corelibs has no word enumeration; String's form uses WebCompat's StringProtocol overload)
+# - `os(iOS)` -> `os(WASI)` in #if conditions: the port stands in for an iOS device (`os(macOS)` stays false)
 # - appends `import WebCompat` (end of file keeps line numbers) (Dispatch, Selector, runtime shims), plus any extra --import modules
 import re
 import sys
@@ -24,8 +29,11 @@ def selector(expr):
     e = expr.strip()
     if e.startswith('getter:') or e.startswith('setter:'):
         e = e.split(':', 1)[1].strip()
+    var_ref = re.match(r'^([a-z_][A-Za-z0-9_]*)\.(.+)$', e)
     if e.startswith('self.'):
         ref = 'Self.' + e[5:]
+    elif var_ref:  # receiver is a variable (#selector(strongSelf.method)): typed reference through its static type
+        ref = 'webMethodOf(%s) { $0.%s }' % (var_ref.group(1), var_ref.group(2))
     elif re.match(r'^[a-z_]', e):
         ref = 'Self.' + e
     else:
@@ -94,6 +102,9 @@ def main():
                      for l in src.split('\n'))
     # corelibs Foundation has no NSMutableString() (only init(capacity:) / init(string:))
     src = re.sub(r'\b(NSMutableString|NSAttributedString)\(\)', r'\1(string: "")', src)
+    src = re.sub(r'(:\s*time_t\s*=\s*)Int\(', r'\1time_t(', src)
+    src = '\n'.join(l.replace('.enumerateSubstrings(in:', '.webEnumerateSubstrings(in:').replace('.byWords', '.webByWords') if re.search(r'as NSString\)\.enumerateSubstrings\(in: NSMakeRange\(.*\.byWords', l) else l for l in src.split('\n'))
+    src = '\n'.join(re.sub(r'\bos\(iOS\)', 'os(WASI)', l) if l.lstrip().startswith(('#if', '#elseif')) else l for l in src.split('\n'))
     header = ''.join('import %s\n' % m for m in ['WebCompat'] + extra)
     open(out_path, 'w', encoding='utf-8').write(src + '\n' + header)
 

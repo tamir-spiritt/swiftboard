@@ -595,10 +595,21 @@ open class UIImage: NSObject {
     }
 }
 
+@_extern(wasm, module: "swiftboard", name: "asset_info")
+func _hostAssetInfo(_ name: UnsafePointer<UInt8>, _ nameLen: Int32, _ out: UnsafeMutablePointer<Double>) -> Int32
+
 /// Image assets the host provides (bundle PNGs, SF Symbols) and decoding of image data, both done by the browser.
 public enum WebAssets {
-    /// Resolver installed by the app/host: name -> (pixel width, pixel height, scale) when the asset exists.
-    nonisolated(unsafe) public static var lookup: ((String) -> (Int, Int, CGFloat)?)?
+    /// Resolver: name -> (pixel width, pixel height, scale) when the asset exists. Defaults to the host's
+    /// `swiftboard.asset_info` import (web/uikit-host.js, from the app's asset manifest).
+    nonisolated(unsafe) public static var lookup: ((String) -> (Int, Int, CGFloat)?)? = { name in
+        var out: (Double, Double, Double) = (0, 0, 0)
+        var n = name
+        let found = n.withUTF8 { b in withUnsafeMutablePointer(to: &out) { o in
+            o.withMemoryRebound(to: Double.self, capacity: 3) { _hostAssetInfo(b.baseAddress ?? UnsafePointer(bitPattern: 1)!, Int32(b.count), $0) }
+        } }
+        return found != 0 ? (Int(out.0), Int(out.1), CGFloat(out.2)) : nil
+    }
     nonisolated(unsafe) public static var decode: ((Data) -> (Int, Int)?)?
     static func image(named name: String) -> (CGImage, CGFloat)? {
         guard let (w, h, s) = lookup?(name) else { return nil }

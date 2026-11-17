@@ -1,5 +1,4 @@
 engine/target/
 dist/
 .spiritt/
-build/
-*.wasm
+__pycache__/

@@ -88,12 +88,15 @@ its own repository.
 <p align="center"><img src="docs/telegram-chatlist.png" alt="Telegram's chat list running from its own source on WebAssembly" width="720"></p>
 
 Running today, compiled from Telegram's real source:
-- `SwiftSignalKit` (Telegram's reactive core) and `Display` (its UI framework, ~80k lines), with **zero source changes
-  beyond two one-line patches**
-- Telegram's `ListView`, theme, unread badges, online markers and English strings, in a 10-chat list you can scroll and tap
+- `SwiftSignalKit` (Telegram's reactive core) and `Display` (its UI framework, ~80k lines)
+- **Telegram's real chat list cell, `ChatListItemNode`**, inside its `ListView`, with its avatars, theme, unread and
+  muted badges, read checks, online markers, icons and English strings: 10 sample chats you can scroll and tap
+- About 30 more real Telegram modules (TextFormat, AvatarNode, EmojiStatusComponent, TelegramStringFormatting,
+  TelegramPresentationData, parts of Postbox and TelegramCore). Only the network and database layer is replaced by
+  sample data; patches to Telegram files are minimal and live in `demos/telegram/overlay/`
+- **8 MB download** (gzip), loads in a few seconds
 
-Next: the chat rows themselves. The rows on screen follow Telegram's measurements but are written by us; Telegram's
-`ChatListItemNode` is the next module to compile (it needs a fake data layer for TelegramCore and Postbox).
+Next: the chat screen and the message input bar.
 
 **Try it:** open the [live chat list](https://swiftboard-telegram-vyzwy.spiritt.app/), or download
 `telegram-chatlist.wasm` there and drag it onto [Swiftboard](https://swiftboard.spiritt.app/): compiled UIKit apps run
@@ -146,7 +149,7 @@ it, and send a PR with an example app that exercises it. Items marked **good fir
 - [ ] Objective-C for mixed codebases (clang to WebAssembly plus a runtime such as libobjc2)
 - [ ] Threads (`wasip1-threads` with cross-origin isolation) instead of the single-threaded run loop
 - [ ] Binary size: Foundation pulls in ICU; slim it with FoundationEssentials, `-Osize` and `wasm-opt`
-- [ ] Telegram: compile `ChatListItemNode` against a fake TelegramCore/Postbox, then the chat screen and the input bar
+- [ ] Telegram: the chat screen (ChatController) and the input bar, then the tab bar and settings
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the dev loop.
 

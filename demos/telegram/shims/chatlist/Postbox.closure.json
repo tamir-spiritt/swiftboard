@@ -1,0 +1,78 @@
+{
+ "files": [
+  "Postbox/Sources/Coding.swift",
+  "Postbox/Sources/ValueBoxKey.swift",
+  "Postbox/Sources/Peer.swift",
+  "Postbox/Sources/Message.swift",
+  "Postbox/Sources/Media.swift",
+  "Postbox/Sources/MediaResource.swift",
+  "Postbox/Sources/PeerPresence.swift",
+  "Postbox/Sources/PeerNotificationSettings.swift",
+  "Postbox/Sources/RenderedPeer.swift",
+  "Postbox/Sources/ChatLocation.swift",
+  "Postbox/Sources/PeerGroup.swift",
+  "Postbox/Sources/PinnedItemId.swift",
+  "Postbox/Sources/PeerReadState.swift",
+  "Postbox/Sources/Hash.swift",
+  "Postbox/Sources/SimpleDictionary.swift",
+  "Postbox/Sources/PeerNameIndexRepresentation.swift",
+  "Postbox/Sources/PostboxLogging.swift",
+  "Postbox/Sources/StringIndexTokens.swift",
+  "Postbox/Sources/PreferencesEntry.swift",
+  "Postbox/Sources/Utils/PostboxCodingAdapter.swift",
+  "Postbox/Sources/Utils/Decoder/AdaptedPostboxDecoder.swift",
+  "Postbox/Sources/Utils/Decoder/AdaptedPostboxKeyedDecodingContainer.swift",
+  "Postbox/Sources/Utils/Decoder/AdaptedPostboxSingleValueDecodingContainer.swift",
+  "Postbox/Sources/Utils/Decoder/AdaptedPostboxUnkeyedDecodingContainer.swift",
+  "Postbox/Sources/Utils/Encoder/AdaptedPostboxEncoder.swift",
+  "Postbox/Sources/Utils/Encoder/AdaptedPostboxKeyedEncodingContainer.swift",
+  "Postbox/Sources/Utils/Encoder/AdaptedPostboxSingleValueEncodingContainer.swift",
+  "Postbox/Sources/Utils/Encoder/AdaptedPostboxUnkeyedEncodingContainer.swift",
+  "Postbox/Sources/FileSize.swift"
+ ],
+ "extract": {
+  "Postbox/Sources/AdditionalChatListItemsTable.swift": [
+   "AdditionalChatListItem"
+  ],
+  "Postbox/Sources/CachedPeerData.swift": [
+   "CachedPeerData"
+  ],
+  "Postbox/Sources/ChatListView.swift": [
+   "ChatListEntryMessageTagSummaryKey",
+   "ChatListMessageTagSummaryInfo",
+   "PeerStoryStats"
+  ],
+  "Postbox/Sources/ChatListTable.swift": [
+   "ChatListRelativePosition"
+  ],
+  "Postbox/Sources/ItemCollection.swift": [
+   "ItemCollectionId",
+   "ItemCollectionInfo"
+  ],
+  "Postbox/Sources/Postbox.swift": [
+   "PeerChatState"
+  ],
+  "Postbox/Sources/PeerOperationLogTable.swift": [
+   "PeerOperationLogTag"
+  ],
+  "Postbox/Sources/PendingMessageActionsTable.swift": [
+   "PendingMessageActionType"
+  ],
+  "Postbox/Sources/PeerChatInterfaceState.swift": [
+   "StoredPeerChatInterfaceState"
+  ],
+  "Postbox/Sources/UnorderedItemListTable.swift": [
+   "UnorderedItemListEntryTag"
+  ],
+  "Postbox/Sources/GroupMessageStatsTable.swift": [
+   "ChatListTotalUnreadStateCategory",
+   "ChatListTotalUnreadStateStats"
+  ],
+  "Postbox/Sources/StoryStatesTable.swift": [
+   "StoredStoryPeerState"
+  ],
+  "Postbox/Sources/MediaBox.swift": [
+   "MediaBoxFetchPriority"
+  ]
+ }
+}

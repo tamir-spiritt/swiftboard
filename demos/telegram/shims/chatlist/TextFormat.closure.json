@@ -1,0 +1,13 @@
+{
+ "files": [
+  "TextFormat/Sources/ChatListPreviewText.swift",
+  "TextFormat/Sources/ChatTextInputAttributes.swift",
+  "TextFormat/Sources/StringWithAppliedEntities.swift",
+  "TextFormat/Sources/TelegramAttributes.swift",
+  "TextFormat/Sources/GenerateTextEntities.swift",
+  "TextFormat/Sources/InstantPageSyntaxHighlightSpecs.swift",
+  "TextFormat/Sources/DateFormat.swift",
+  "TextFormat/Sources/AddFormatToStringWithRanges.swift"
+ ],
+ "extract": {}
+}

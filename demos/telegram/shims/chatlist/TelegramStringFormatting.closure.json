@@ -1,0 +1,16 @@
+{
+ "files": [
+  "TelegramStringFormatting/Sources/InstantPagePreviewBuilder.swift",
+  "TelegramStringFormatting/Sources/InstantPagePreviewText.swift",
+  "TelegramStringFormatting/Sources/MessageContentKind.swift",
+  "TelegramStringFormatting/Sources/PresenceStrings.swift",
+  "TelegramStringFormatting/Sources/ServiceMessageStrings.swift",
+  "TelegramStringFormatting/Sources/GiftFormat.swift",
+  "TelegramStringFormatting/Sources/CurrencyFormat.swift",
+  "TelegramStringFormatting/Sources/TonFormat.swift",
+  "TelegramStringFormatting/Sources/Geo.swift",
+  "TelegramStringFormatting/Sources/DateFormat.swift",
+  "TelegramStringFormatting/Sources/Locale.swift"
+ ],
+ "extract": {}
+}

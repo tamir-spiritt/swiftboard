@@ -3,6 +3,10 @@
 #if os(WASI)
 import Foundation
 
+/// Unapplied method reference through a value's static type: objc-strip turns `#selector(node.tapped)` into
+/// `Selector("tapped", webMethodOf(node) { $0.tapped })`.
+public func webMethodOf<T: AnyObject, F>(_ value: T, _ f: @escaping (T) -> F) -> (T) -> F { f }
+
 /// A selector: its ObjC-style name plus, when made from `#selector(...)` (see tools/objc-strip.py), a type-checked
 /// invoker that calls the method on a target of the right class.
 public struct Selector: Hashable, CustomStringConvertible {
@@ -367,4 +371,172 @@ public func _webCFRunLoopTimerSetTolerance(_ t: UnsafeMutableRawPointer?, _ v: D
 public func _webCFRunLoopTimerInvalidate(_ t: UnsafeMutableRawPointer?) { cfTimer(t)?.valid = false }
 @_cdecl("CFRunLoopTimerIsValid")
 public func _webCFRunLoopTimerIsValid(_ t: UnsafeMutableRawPointer?) -> UInt8 { (cfTimer(t)?.valid ?? false) ? 1 : 0 }
+#endif
+
+#if os(WASI)
+extension NSMutableString {
+    /// Darwin's variadic appendFormat; corelibs has none.
+    public func appendFormat(_ format: String, _ args: CVarArg...) { append(String(format: format, arguments: args)) }
+}
+#endif
+
+#if os(WASI)
+// MARK: CFStringTokenizer (word units) for search tokens
+public final class CFStringTokenizer {
+    let string: NSString
+    var tokens: [NSRange] = []
+    var index = -1
+    init(_ s: NSString, _ range: NSRange) {
+        string = s
+        var i = range.location, start = -1
+        let end = range.location + range.length
+        func isWord(_ c: unichar) -> Bool { Character(Unicode.Scalar(c) ?? " ").isLetter || Character(Unicode.Scalar(c) ?? " ").isNumber }
+        while i <= end {
+            let w = i < end && isWord(s.character(at: i))
+            if w && start < 0 { start = i } else if !w && start >= 0 { tokens.append(NSRange(location: start, length: i - start)); start = -1 }
+            i += 1
+        }
+    }
+}
+public struct CFStringTokenizerTokenType: OptionSet {
+    public let rawValue: UInt
+    public init(rawValue: UInt) { self.rawValue = rawValue }
+    public static let normal = CFStringTokenizerTokenType(rawValue: 1)
+}
+public typealias CFIndex = Int
+public typealias CFAllocator = AnyObject
+public let kCFAllocatorDefault: CFAllocator? = nil
+public struct CFRange: Equatable {
+    public var location: CFIndex
+    public var length: CFIndex
+    public init() { location = 0; length = 0 }
+    public init(location: CFIndex, length: CFIndex) { self.location = location; self.length = length }
+}
+public func CFRangeMake(_ loc: CFIndex, _ len: CFIndex) -> CFRange { CFRange(location: loc, length: len) }
+public let kCFStringTokenizerUnitWord: UInt = 0
+public func CFLocaleCopyCurrent() -> AnyObject? { nil }
+public func CFStringTokenizerCreate(_ alloc: CFAllocator?, _ string: NSString, _ range: CFRange, _ options: UInt, _ locale: AnyObject?) -> CFStringTokenizer { CFStringTokenizer(string, NSRange(location: range.location, length: range.length)) }
+public func CFStringTokenizerAdvanceToNextToken(_ t: CFStringTokenizer) -> CFStringTokenizerTokenType {
+    t.index += 1
+    return t.index < t.tokens.count ? .normal : []
+}
+public func CFStringTokenizerGetCurrentTokenRange(_ t: CFStringTokenizer) -> CFRange {
+    t.index >= 0 && t.index < t.tokens.count ? CFRange(location: t.tokens[t.index].location, length: t.tokens[t.index].length) : CFRange(location: -1, length: 0)
+}
+#endif
+
+#if os(WASI)
+/// Seconds between 1970 and 2001 (CoreFoundation's reference date).
+public let kCFAbsoluteTimeIntervalSince1970: Double = 978307200.0
+#endif
+
+#if os(WASI)
+extension Data.ReadingOptions {
+    /// Darwin's old name for .alwaysMapped.
+    public static var mappedRead: Data.ReadingOptions { .alwaysMapped }
+}
+#endif
+
+#if os(WASI)
+extension NSDictionary {
+    /// Darwin's NSDictionary(contentsOf:): property lists, and old-style `"key" = "value";` .strings files.
+    public convenience init?(contentsOf url: URL) {
+        guard let data = try? Data(contentsOf: url) else { return nil }
+        if let plist = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any] {
+            self.init(dictionary: plist); return
+        }
+        guard let text = String(data: data, encoding: .utf8) ?? String(data: data, encoding: .utf16) else { return nil }
+        var result: [String: String] = [:]
+        let pattern = try! NSRegularExpression(pattern: #""((?:[^"\\]|\\.)*)"\s*=\s*"((?:[^"\\]|\\.)*)"\s*;"#)
+        let ns = text as NSString
+        func unescape(_ s: String) -> String {
+            s.replacingOccurrences(of: "\\n", with: "\n").replacingOccurrences(of: "\\\"", with: "\"").replacingOccurrences(of: "\\\\", with: "\\")
+        }
+        for m in pattern.matches(in: text, range: NSRange(location: 0, length: ns.length)) {
+            result[unescape(ns.substring(with: m.range(at: 1)))] = unescape(ns.substring(with: m.range(at: 2)))
+        }
+        self.init(dictionary: result)
+    }
+}
+#endif
+
+#if os(WASI)
+// MARK: NSDataDetector (links)
+/// Darwin's NSDataDetector, links only, via a URL regex (corelibs Foundation has none and cannot construct link
+/// results). Phone numbers are not detected.
+public final class NSDataDetector {
+    public final class Result {
+        public let resultType: NSTextCheckingResult.CheckingType
+        public let range: NSRange
+        public let url: URL?
+        init(range: NSRange, url: URL?) { resultType = .link; self.range = range; self.url = url }
+    }
+    let types: NSTextCheckingResult.CheckingType
+    static let pattern = try! NSRegularExpression(pattern:
+        #"(?i)\b(?:(?:https?|tg|ftp)://[^\s<>"]+|www\.[^\s<>"]+|[a-z0-9][a-z0-9-]*(?:\.[a-z0-9-]+)*\.(?:com|org|net|io|me|ai|app|dev|co|ru|de|uk|info|tv|xyz|gg|so|sh|ly|to|t\.me)(?:/[^\s<>"]*)?)"#)
+    public init(types: UInt64) throws { self.types = NSTextCheckingResult.CheckingType(rawValue: types) }
+    public func enumerateMatches(in string: String, options: NSRegularExpression.MatchingOptions = [], range: NSRange,
+                                 using block: (Result?, NSRegularExpression.MatchingFlags, UnsafeMutablePointer<ObjCBool>) -> Void) {
+        guard types.contains(.link) else { return }
+        var stop = ObjCBool(false)
+        let ns = string as NSString
+        for m in NSDataDetector.pattern.matches(in: string, options: [], range: range) {
+            var r = m.range
+            while r.length > 0, let last = ns.substring(with: NSRange(location: r.location + r.length - 1, length: 1)).unicodeScalars.first,
+                  ".,;:!?)]}'".unicodeScalars.contains(last) { r.length -= 1 }
+            var s = ns.substring(with: r)
+            if !s.contains("://") { s = "http://" + s }
+            block(Result(range: r, url: URL(string: s)), [], &stop)
+            if stop.boolValue { return }
+        }
+    }
+    public func matches(in string: String, options: NSRegularExpression.MatchingOptions = [], range: NSRange) -> [Result] {
+        var out: [Result] = []
+        enumerateMatches(in: string, options: options, range: range) { r, _, _ in if let r { out.append(r) } }
+        return out
+    }
+}
+#endif
+
+#if os(WASI)
+// time_t is Int on Darwin (Int64 here): Darwin code passes `&someInt`.
+@discardableResult public func localtime_r(_ t: UnsafePointer<Int>, _ result: UnsafeMutablePointer<tm>) -> UnsafeMutablePointer<tm>? {
+    var v = time_t(t.pointee); return WASILibc.localtime_r(&v, result)
+}
+@discardableResult public func gmtime_r(_ t: UnsafePointer<Int>, _ result: UnsafeMutablePointer<tm>) -> UnsafeMutablePointer<tm>? {
+    var v = time_t(t.pointee); return WASILibc.gmtime_r(&v, result)
+}
+#endif
+
+#if os(WASI)
+// MARK: word enumeration
+// corelibs Foundation marks NSString.EnumerationOptions.byWords unavailable. objc-strip rewrites Darwin's
+// `enumerateSubstrings(in:options: [.byWords ...])` to these; other options forward to corelibs.
+extension NSString.EnumerationOptions {
+    public static let webByWords = NSString.EnumerationOptions(rawValue: 3)
+}
+extension NSString {
+    public func webEnumerateSubstrings(in range: NSRange, options opts: NSString.EnumerationOptions = [],
+                                       using block: (String?, NSRange, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
+        guard opts.rawValue & 0xff == 3 else { return enumerateSubstrings(in: range, options: opts, using: block) }
+        // words: maximal runs of letters, digits, marks and apostrophes (UTF-16 ranges)
+        var words: [NSRange] = []
+        var start = -1
+        let isWordUnit: (unichar) -> Bool = { c in
+            guard let s = Unicode.Scalar(c) else { return true } // surrogate halves belong to the word
+            return CharacterSet.alphanumerics.contains(s) || CharacterSet.nonBaseCharacters.contains(s) || c == 0x27 || c == 0x2019 || c == 0x5F
+        }
+        for i in range.location ..< range.location + range.length {
+            if isWordUnit(character(at: i)) { if start < 0 { start = i } }
+            else if start >= 0 { words.append(NSRange(location: start, length: i - start)); start = -1 }
+        }
+        if start >= 0 { words.append(NSRange(location: start, length: range.location + range.length - start)) }
+        if opts.contains(.reverse) { words.reverse() }
+        var stop = ObjCBool(false)
+        for w in words {
+            block(opts.contains(.substringNotRequired) ? nil : substring(with: w), w, w, &stop)
+            if stop.boolValue { return }
+        }
+    }
+}
 #endif

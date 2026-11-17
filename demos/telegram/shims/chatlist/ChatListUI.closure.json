@@ -1,0 +1,20 @@
+{
+ "files": [
+  "ChatListUI/Sources/Node/ChatListBadgeNode.swift",
+  "ChatListUI/Sources/Node/ChatListStatusNode.swift",
+  "ChatListUI/Sources/Node/ChatListTypingNode.swift",
+  "ChatListUI/Sources/Node/ChatListItemStrings.swift",
+  "ChatListUI/Sources/Node/ChatListPresentationData.swift",
+  "ChatListUI/Sources/Node/ChatListItem.swift",
+  "ChatListUI/Sources/Node/ChatListRichTextPreview.swift",
+  "ChatListUI/Sources/ChatListNeighborFacets.swift"
+ ],
+ "extract": {
+  "ChatListUI/Sources/Node/ChatListNode.swift": [
+   "ChatListHighlightedLocation"
+  ],
+  "ChatListUI/Sources/Node/ChatListNodeEntries.swift": [
+   "ChatListNodeEntryPromoInfo"
+  ]
+ }
+}

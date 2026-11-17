@@ -61,12 +61,27 @@ const rasterCache = new Map(); // CGImage serial -> canvas
 const parsePath = new Map();
 function path2d(svg) { let p = parsePath.get(svg); if (!p) { p = new Path2D(svg); parsePath.set(svg, p); } return p; }
 
+// Core Graphics' copy blend mode replaces pixels inside the painted shape only; canvas 'copy' also clears everything
+// outside it. Emulated as: punch the shape out (destination-out, opaque), then paint it source-over.
+function copyAware(g, paint) {
+  if (g.globalCompositeOperation !== 'copy') { g.save(); paint(g, false); g.restore(); return; }
+  g.save(); g.globalCompositeOperation = 'destination-out'; g.globalAlpha = 1; g.fillStyle = '#000'; paint(g, true); g.restore();
+  g.save(); g.globalCompositeOperation = 'source-over'; paint(g, false); g.restore();
+}
+
+// Bundle image assets: name -> { image (decoded HTMLImageElement), w, h, scale }, filled before the app starts.
+const assets = new Map();
+
 function rasterize(img) {
   let c = rasterCache.get(img.id);
   if (c) { c.used = true; return c; }
   c = document.createElement('canvas');
   c.width = Math.max(1, img.width); c.height = Math.max(1, img.height);
   c.used = true;
+  if (img.kind === 'external' && img.source?.startsWith('asset:')) {
+    const a = assets.get(img.source.slice(6));
+    if (a) c.getContext('2d').drawImage(a.image, 0, 0, c.width, c.height);
+  }
   if (img.kind === 'recording') {
     const g = c.getContext('2d');
     g.translate(0, c.height); g.scale(1, -1); // CoreGraphics bitmaps are y-up
@@ -76,11 +91,23 @@ function rasterize(img) {
   return c;
 }
 
-function replay(g, ops) {
+function replay(g0, ops) {
+  // clip(to:mask:) has no canvas equivalent: drawing after it goes to an offscreen layer that is masked by the image's
+  // alpha (destination-in) and composited when the clip's graphics state is restored.
+  let g = g0, depth = 0;
+  const masks = [];
   for (const o of ops) {
     switch (o[0]) {
-      case 'save': g.save(); break;
-      case 'restore': g.restore(); break;
+      case 'save': g.save(); depth++; break;
+      case 'restore': {
+        while (masks.length && masks[masks.length - 1].depth === depth) {
+          const m = masks.pop(), layer = g;
+          layer.setTransform(m.t); layer.globalCompositeOperation = 'destination-in'; layer.globalAlpha = 1;
+          layer.translate(m.r[0], m.r[1] + m.r[3]); layer.scale(1, -1); layer.drawImage(m.bmp, 0, 0, m.r[2], m.r[3]);
+          g = m.parent; g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.globalCompositeOperation = 'source-over'; g.drawImage(layer.canvas, 0, 0); g.restore();
+        }
+        g.restore(); depth--; break;
+      }
       case 'concat': g.transform(...o[1]); break;
       case 'fillColor': g.fillStyle = o[1]; break;
       case 'strokeColor': g.strokeStyle = o[1]; break;
@@ -92,15 +119,23 @@ function replay(g, ops) {
       case 'alpha': g.globalAlpha = o[1]; break;
       case 'blend': g.globalCompositeOperation = o[1]; break;
       case 'shadow': g.shadowOffsetX = o[1][0]; g.shadowOffsetY = -o[1][1]; g.shadowBlur = o[2]; g.shadowColor = o[3]; break;
-      case 'fill': g.fill(path2d(o[1]), o[2]); break;
-      case 'stroke': g.stroke(path2d(o[1])); break;
+      case 'fill': copyAware(g, (h, punch) => { if (punch) h.fillStyle = '#000'; h.fill(path2d(o[1]), o[2]); }); break;
+      case 'stroke': copyAware(g, (h, punch) => { if (punch) h.strokeStyle = '#000'; h.stroke(path2d(o[1])); }); break;
       case 'clip': g.clip(path2d(o[1]), o[2]); break;
-      case 'clipMask': { const r = o[2]; g.beginPath(); g.rect(r[0], r[1], r[2], r[3]); g.clip(); break; }
+      case 'clipMask': {
+        const r = o[2], c = document.createElement('canvas');
+        c.width = g.canvas.width; c.height = g.canvas.height;
+        const layer = c.getContext('2d'), t = g.getTransform();
+        layer.setTransform(t);
+        for (const k of ['fillStyle', 'strokeStyle', 'lineWidth', 'lineCap', 'lineJoin', 'globalAlpha', 'font']) layer[k] = g[k];
+        masks.push({ depth, parent: g, t, r, bmp: rasterize(o[1]) });
+        g = layer; break;
+      }
       case 'resetClip': break;
       case 'clear': { const r = o[1]; const op = g.globalCompositeOperation; g.globalCompositeOperation = 'destination-out'; g.fillStyle; g.save(); g.fillStyle = '#000'; g.fillRect(r[0], r[1], r[2], r[3]); g.restore(); g.globalCompositeOperation = op; break; }
       case 'image': {
         const r = o[2], bmp = rasterize(o[1]);
-        g.save(); g.translate(r[0], r[1] + r[3]); g.scale(1, -1); g.drawImage(bmp, 0, 0, r[2], r[3]); g.restore(); break;
+        copyAware(g, (h, punch) => { h.translate(r[0], r[1] + r[3]); h.scale(1, -1); punch ? h.fillRect(0, 0, r[2], r[3]) : h.drawImage(bmp, 0, 0, r[2], r[3]); }); break;
       }
       case 'linearGradient': case 'radialGradient': {
         const lin = o[0] === 'linearGradient';
@@ -128,7 +163,7 @@ function roundRect(g, w, h, r) { g.beginPath(); if (r > 0) g.roundRect(0, 0, w, 
 function drawContents(g, L, w, h) {
   const img = L.contents;
   if (!img || typeof img !== 'object') return;
-  if (img.kind === 'external') { return; }
+  if (img.kind === 'external' && !img.source?.startsWith('asset:')) { return; }
   let bmp = rasterize(img);
   if (L.tintColor) {
     const t = document.createElement('canvas'); t.width = bmp.width; t.height = bmp.height;
@@ -208,7 +243,8 @@ function paintLayer(g, L, alpha) {
 
 /**
  * Starts a UIKit wasm app in `canvas`.
- * options: { wasm: URL, width, height (points), chrome: (ctx, w, h) => void, onLog: (line) => void }
+ * options: { wasm: URL, assets: manifest URL (optional), width, height (points), chrome: (ctx, w, h) => void,
+ *            onLog: (line) => void }
  */
 export async function startUIKitApp(canvas, options) {
   const width = options.width ?? 390, height = options.height ?? 844;
@@ -229,15 +265,28 @@ export async function startUIKitApp(canvas, options) {
         if (font !== lastFont) { measureCtx.font = font; lastFont = font; }
         return measureCtx.measureText(text).width;
       },
+      asset_info(np, nl, out) {
+        const a = assets.get(dec.decode(new Uint8Array(memory.buffer, np, nl)));
+        if (!a) return 0;
+        new Float64Array(memory.buffer, out, 3).set([a.w, a.h, a.scale]);
+        return 1;
+      },
     },
     env: new Proxy({}, { get: (t, k) => () => { console.warn('unresolved import env.' + String(k)); return 0; } }),
   };
   const t0 = performance.now();
+  // options.assets: URL of a manifest { name: [file, pixelWidth, pixelHeight, scale] }; files relative to it
+  const assetsReady = options.assets ? fetch(options.assets).then((r) => r.ok ? r.json() : {}).then((manifest) =>
+    Promise.all(Object.entries(manifest).map(async ([name, [file, w, h, scale]]) => {
+      const image = new Image(); image.src = new URL(file, new URL(options.assets, location.href)).href;
+      try { await image.decode(); assets.set(name, { image, w, h, scale }); } catch {}
+    }))).catch(() => {}) : Promise.resolve();
   const resp = await fetch(options.wasm);
   const { instance } = await WebAssembly.instantiateStreaming(resp, imports);
   const ex = instance.exports;
   memory = ex.memory;
   const loadMs = performance.now() - t0;
+  await assetsReady;
   ex._initialize?.();
   ex.uikit_set_screen(width, height, dpr);
   ex.app_start();

@@ -1,0 +1,23 @@
+{
+ "files": [
+  "TelegramPresentationData/Sources/PresentationsResourceCache.swift",
+  "TelegramPresentationData/Sources/PresentationTheme.swift",
+  "TelegramPresentationData/Sources/DefaultDayPresentationTheme.swift",
+  "TelegramPresentationData/Sources/Resources/PresentationResourceKey.swift",
+  "TelegramPresentationData/Sources/Resources/PresentationResourcesChatList.swift",
+  "TelegramPresentationData/Sources/Resources/PresentationResourcesItemList.swift",
+  "TelegramPresentationData/Sources/PresentationData.swift",
+  "TelegramPresentationData/Sources/BubblelessPresentationTheme.swift",
+  "TelegramPresentationData/Sources/DefaultPresentationStrings.swift",
+  "TelegramPresentationData/Sources/MakePresentationTheme.swift",
+  "TelegramPresentationData/Sources/WallpaperUtils.swift",
+  "TelegramPresentationData/Sources/DefaultDarkPresentationTheme.swift",
+  "TelegramPresentationData/Sources/DefaultDarkTintedPresentationTheme.swift",
+  "TelegramPresentationData/Sources/ComponentsThemes.swift",
+  "TelegramPresentationData/Sources/PresentationThemeCoder.swift",
+  "TelegramPresentationData/Sources/PresentationThemeCodable.swift",
+  "TelegramPresentationData/Sources/ChatMessageTextFonts.swift",
+  "TelegramPresentationData/Sources/NumericFormat.swift"
+ ],
+ "extract": {}
+}

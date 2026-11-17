@@ -1,5 +1,6 @@
 // Swiftboard CoreGraphics (MIT): colors, color spaces, bitmap formats, CF stand-ins.
 import Foundation
+import WebCompat
 
 public typealias CFArray = NSArray
 public typealias CFMutableArray = NSMutableArray
@@ -11,21 +12,11 @@ public typealias CFMutableData = NSMutableData
 public typealias CFNumber = NSNumber
 public typealias CFBoolean = NSNumber
 public typealias CFTypeRef = AnyObject
-public typealias CFIndex = Int
 public typealias CFTimeInterval = Double
-public typealias CFAllocator = AnyObject
 public typealias CFURL = NSURL
 public let kCFBooleanTrue: CFBoolean = NSNumber(value: true)
 public let kCFBooleanFalse: CFBoolean = NSNumber(value: false)
-public let kCFAllocatorDefault: CFAllocator? = nil
 public let kCFNull: NSNull = NSNull()
-public struct CFRange: Equatable {
-    public var location: CFIndex
-    public var length: CFIndex
-    public init() { location = 0; length = 0 }
-    public init(location: CFIndex, length: CFIndex) { self.location = location; self.length = length }
-}
-public func CFRangeMake(_ loc: CFIndex, _ len: CFIndex) -> CFRange { CFRange(location: loc, length: len) }
 public func CFArrayGetCount(_ a: CFArray) -> CFIndex { a.count }
 public func CFStringGetLength(_ s: CFString) -> CFIndex { s.length }
 

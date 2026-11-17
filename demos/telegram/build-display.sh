@@ -37,7 +37,7 @@ MODS=${*:-$ALL}
 for m in $MODS; do
   case $m in
     WebCompat|CoreGraphics|QuartzCore|CoreText|UIKit|AsyncDisplayKit) mod $m "$PLAT"/$m/*.swift || exit 1 ;;
-    Stubs) for s in Darwin ObjectiveC Accelerate AudioToolbox CoreHaptics CoreMedia AVFoundation; do mod $s "$PLAT"/Stubs/$s.swift || exit 1; done ;;
+    Stubs) for s in Darwin ObjectiveC Accelerate AudioToolbox CoreHaptics CoreMedia AVFoundation Contacts CoreTelephony ImageIO CoreLocation MapKit CoreImage; do mod $s "$PLAT"/Stubs/$s.swift || exit 1; done ;;
     ObjCRuntimeUtils|UIKitRuntimeUtils|AppBundle) mod $m "$HERE"/shims/$m/*.swift || exit 1 ;;
     SwiftSignalKit) prep SwiftSignalKit "$TG"/submodules/SSignalKit/SwiftSignalKit/Source/*.swift
       mod SwiftSignalKit "$OUT"/src/SwiftSignalKit/*.swift || exit 1 ;;

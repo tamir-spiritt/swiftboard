@@ -1,0 +1,57 @@
+# Layer-3 module list, in build order: Module: real upstream files (relative to submodules/). Every module also
+# compiles chatlist-stubs/<Module>.swift (the stand-in for what the real files need but the port does not build).
+HierarchyTrackingLayer: Components/HierarchyTrackingLayer/Sources/HierarchyTrackingLayer.swift
+ComponentFlow: ComponentFlow/Source/Base/ChildComponentTransitions.swift ComponentFlow/Source/Base/CombinedComponent.swift ComponentFlow/Source/Base/Component.swift ComponentFlow/Source/Base/ComponentAccessibility.swift ComponentFlow/Source/Base/Environment.swift ComponentFlow/Source/Base/Transition.swift ComponentFlow/Source/Components/Button.swift ComponentFlow/Source/Components/Circle.swift ComponentFlow/Source/Components/HStack.swift ComponentFlow/Source/Components/Image.swift ComponentFlow/Source/Components/LazyList.swift ComponentFlow/Source/Components/List.swift ComponentFlow/Source/Components/Rectangle.swift ComponentFlow/Source/Components/RoundedRectangle.swift ComponentFlow/Source/Components/Text.swift ComponentFlow/Source/Components/TransformContents.swift ComponentFlow/Source/Components/VStack.swift ComponentFlow/Source/Components/ZStack.swift ComponentFlow/Source/Gestures/Gesture.swift ComponentFlow/Source/Gestures/LongPressGesture.swift ComponentFlow/Source/Gestures/PanGesture.swift ComponentFlow/Source/Gestures/TapGesture.swift ComponentFlow/Source/Host/ComponentHostView.swift ComponentFlow/Source/Host/NavigationLayoutEnvironment.swift ComponentFlow/Source/Host/RootHostView.swift ComponentFlow/Source/Utils/ActionSlot.swift ComponentFlow/Source/Utils/Color.swift ComponentFlow/Source/Utils/Condition.swift ComponentFlow/Source/Utils/EscapeGuard.swift ComponentFlow/Source/Utils/Insets.swift ComponentFlow/Source/Utils/Rect.swift ComponentFlow/Source/Utils/Size.swift
+LegacyComponents:
+CheckNode:
+ManagedAnimationNode:
+MultilineTextComponent: Components/MultilineTextComponent/Sources/MultilineTextComponent.swift
+GenerateStickerPlaceholderImage:
+ShimmerEffect: ShimmerEffect/Sources/ShimmerEffect.swift ShimmerEffect/Sources/StickerShimmerEffectNode.swift
+RadialStatusNode: RadialStatusNode/Sources/RadialCheckContentNode.swift RadialStatusNode/Sources/RadialCloudProgressContentNode.swift RadialStatusNode/Sources/RadialDownloadContentNode.swift RadialStatusNode/Sources/RadialProgressContentNode.swift RadialStatusNode/Sources/RadialStatusContentNode.swift RadialStatusNode/Sources/RadialStatusIconContentNode.swift RadialStatusNode/Sources/RadialStatusNode.swift RadialStatusNode/Sources/RadialStatusSecretTimeoutContentNode.swift
+ChatTitleActivityNode: ChatTitleActivityNode/Sources/ChatChoosingStickerActivityContentNode.swift ChatTitleActivityNode/Sources/ChatPlayingActivityContentNode.swift ChatTitleActivityNode/Sources/ChatRecordingVideoActivityContentNode.swift ChatTitleActivityNode/Sources/ChatRecordingVoiceActivityContentNode.swift ChatTitleActivityNode/Sources/ChatTitleActivityContentNode.swift ChatTitleActivityNode/Sources/ChatTitleActivityNode.swift ChatTitleActivityNode/Sources/ChatTypingActivityContentNode.swift ChatTitleActivityNode/Sources/ChatUploadingActivityContentNode.swift
+InvisibleInkDustNode: InvisibleInkDustNode/Sources/InvisibleInkDustNode.swift InvisibleInkDustNode/Sources/MediaDustNode.swift
+MurMurHash32:
+Emoji: Emoji/Sources/EmojiUtils.swift
+StringTransliteration:
+Sunrise:
+FlatBuffers:
+FlatSerialization:
+Postbox:
+TelegramCore:
+TelegramUIPreferences:
+PresentationStrings:
+TelegramPresentationData:
+ItemListUI: ItemListUI/Sources/ItemListRevealMotion.swift ItemListUI/Sources/ItemListRevealTouchGestureRecognizer.swift ItemListUI/Sources/ItemListRevealOptionsNode.swift ItemListUI/Sources/ItemListSelectableControlNode.swift ItemListUI/Sources/ItemListEditableReorderControlNode.swift ItemListUI/Sources/Items/ItemListEditableItem.swift ItemListUI/Sources/ItemListItem.swift ItemListUI/Sources/ItemListNeighborFacet.swift
+libprisma:
+TextFormat:
+LocalizedPeerData: LocalizedPeerData/Sources/PeerTitle.swift
+PlatformRestrictionMatching: PlatformRestrictionMatching/Sources/PlatformRestrictionMatching.swift
+TelegramStringFormatting:
+GZip:
+Lottie:
+AnimationCache:
+MultiAnimationRenderer:
+AccountContext:
+PeerPresenceStatusManager: PeerPresenceStatusManager/Sources/PeerPresenceStatusManager.swift
+EmojiTextAttachmentView:
+TextNodeWithEntities: TelegramUI/Components/TextNodeWithEntities/Sources/TextNodeWithEntities.swift
+MultilineTextWithEntitiesComponent: Components/MultilineTextWithEntitiesComponent/Sources/MultilineTextWithEntitiesComponent.swift
+EmojiStatusComponent: TelegramUI/Components/EmojiStatusComponent/Sources/EmojiStatusComponent.swift
+FastBlur:
+AnimationUI:
+DirectMediaImageCache:
+TinyThumbnail: TinyThumbnail/Sources/TinyThumbnail.swift
+AvatarStoryIndicatorComponent: TelegramUI/Components/Stories/AvatarStoryIndicatorComponent/Sources/AvatarStoryIndicatorComponent.swift
+AvatarNode: AvatarNode/Sources/AvatarNode.swift AvatarNode/Sources/AvatarBadgeView.swift AvatarNode/Sources/PeerAvatar.swift
+PhotoResources:
+AvatarVideoNode:
+ComponentDisplayAdapters: Components/ComponentDisplayAdapters/Sources/ComponentDisplayAdapters.swift
+GlassBackgroundComponent:
+PresentationDataUtils:
+ContextUI:
+ChatInterfaceState:
+GalleryUI:
+PeerOnlineMarkerNode: PeerOnlineMarkerNode/Sources/PeerOnlineMarkerNode.swift
+PersistentStringHash: PersistentStringHash/Sources/StringHash.swift
+ChatListUI:

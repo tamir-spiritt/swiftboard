@@ -16,7 +16,7 @@ function measure(fontPtr, fontLen, textPtr, textLen) {
 }
 const { instance } = await WebAssembly.instantiate(fs.readFileSync(process.argv[2]), {
   wasi_snapshot_preview1: wasi.wasiImport,
-  swiftboard: { measure_text: measure },
+  swiftboard: { measure_text: measure, asset_info: () => 0 },
 });
 memory = instance.exports.memory;
 try { const code = wasi.start(instance); if (code) console.error('exit', code); } catch (e) { console.error('trap', e); process.exitCode = 1; }

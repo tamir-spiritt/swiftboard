@@ -10,6 +10,7 @@ const log = (line) => { logEl.textContent += line + '\n'; logEl.scrollTop = 1e9;
 try {
   const { stats } = await startUIKitApp(document.getElementById('screen'), {
     wasm: new URL(`${app}.wasm`, import.meta.url),
+    assets: new URL('assets/manifest.json', import.meta.url).href,
     width: 390, height: 844,
     chrome: (g, w, h) => paintChrome(g, { w, h, island: true, home: true }, false),
     onLog: log,

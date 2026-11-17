@@ -9,7 +9,7 @@ function measure(fp, fl, tp, tl) {
   let w = 0; for (const ch of text) w += ch === ' ' ? 0.26 : narrow.has(ch) ? 0.3 : wide.has(ch) ? 0.85 : /[A-Z]/.test(ch) ? 0.66 : 0.53;
   return w * size;
 }
-const { instance } = await WebAssembly.instantiate(fs.readFileSync(process.argv[2]), { wasi_snapshot_preview1: wasi.wasiImport, swiftboard: { measure_text: measure }, env: new Proxy({}, { get: (t, k) => () => { console.log('env.' + String(k)); return 0; } }) });
+const { instance } = await WebAssembly.instantiate(fs.readFileSync(process.argv[2]), { wasi_snapshot_preview1: wasi.wasiImport, swiftboard: { measure_text: measure, asset_info: () => 0 }, env: new Proxy({}, { get: (t, k) => () => { console.log('env.' + String(k)); return 0; } }) });
 const ex = instance.exports; memory = ex.memory;
 wasi.initialize(instance);
 ex.uikit_set_screen(390, 844, 2);

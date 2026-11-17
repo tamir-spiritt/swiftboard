@@ -1,0 +1,23 @@
+{
+ "files": [],
+ "extract": {
+  "AccountContext/Sources/ChatListController.swift": [
+   "ChatListControllerLocation"
+  ],
+  "AccountContext/Sources/AccountContext.swift": [
+   "ChatLocation"
+  ],
+  "AccountContext/Sources/Premium.swift": [
+   "PremiumConfiguration"
+  ],
+  "AccountContext/Sources/PeerNameColors.swift": [
+   "PeerNameColors"
+  ],
+  "AccountContext/Sources/ChatController.swift": [
+   "ChatFolderTitle",
+   "ChatTextInputStateText",
+   "ChatTextInputStateTextAttribute",
+   "ChatTextInputStateTextAttributeType"
+  ]
+ }
+}

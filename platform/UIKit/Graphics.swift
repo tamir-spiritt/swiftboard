@@ -265,6 +265,19 @@ open class NSShadow: NSObject {
     open var shadowColor: Any?
     public override init() {}
 }
+extension NSAttributedString {
+    /// U+FFFC with the attachment attribute, as on Darwin.
+    public convenience init(attachment: NSTextAttachment) { self.init(string: "\u{FFFC}", attributes: [.attachment: attachment]) }
+}
+
+/// TextKit 2 attachment view provider (iOS 15). Registered classes are kept; text layout does not host views yet.
+open class NSTextAttachmentViewProvider: NSObject {
+    public weak var textAttachment: NSTextAttachment?
+    public var view: UIView?
+    public init(textAttachment: NSTextAttachment, parentView: UIView?, textLayoutManager: AnyObject?, location: AnyObject?) { self.textAttachment = textAttachment }
+    open func loadView() {}
+}
+
 open class NSTextAttachment: NSObject {
     open var image: UIImage?
     open var bounds: CGRect = .zero
@@ -272,6 +285,8 @@ open class NSTextAttachment: NSObject {
     open var fileType: String?
     public override init() {}
     public init(data: Data?, ofType uti: String?) { contents = data; fileType = uti }
+    nonisolated(unsafe) static var viewProviders: [String: NSTextAttachmentViewProvider.Type] = [:]
+    open class func registerViewProviderClass(_ cls: NSTextAttachmentViewProvider.Type, forFileType fileType: String) { viewProviders[fileType] = cls }
     public convenience init(image: UIImage) { self.init(); self.image = image }
 }
 

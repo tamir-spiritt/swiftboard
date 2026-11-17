@@ -1,0 +1,302 @@
+{
+ "files": [
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramUser.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramChannel.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramGroup.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramSecretChat.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaImage.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaFile.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaAction.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TextEntitiesMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramUserPresence.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_AppConfiguration.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_Namespaces.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_MediaReference.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_PeerAccessRestrictionInfo.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_PeerStatusSettings.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_PixelDimensions.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_SecretChatState.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramChatAdminRights.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramChatBannedRights.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaPoll.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaResource.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaTodo.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_PeerAccessHash.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramWallpaper.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_JSON.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_PeerReference.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_SecretChatEncryptionConfig.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_SecretChatKeychain.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_SecretChatOutgoingOperation.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaWebpage.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_InstantPage.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_SecretFileEncryptionKey.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramCommunity.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaStory.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramTheme.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_RichText.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_CachedUserData.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_CloudFileMediaResource.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_InstantPageButton.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_BotInfo.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_GlobalNotificationSettings.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramPeerNotificationSettings.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_ReplyMarkupMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaContact.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaDice.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaExpiredContent.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaGame.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaGiveaway.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaGiveawayResults.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaInvoice.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaLiveStream.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaMap.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaPaidContent.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaUnsupported.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaWebFile.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_ReactionsMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_WasScheduledMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_RichTextMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_SourceReferenceMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_TelegramMediaWidget.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_SynchronizeableChatInputState.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_CloudChatRemoveMessagesOperation.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_ExportedInvitation.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_Localization.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_CachedChannelData.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_CachedGroupData.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_StickerPackCollectionInfo.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_CachedGroupParticipants.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_MediaReferenceFlatBuffers.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_EditedMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_AutoremoveTimeoutMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_OutgoingScheduleInfoMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_AuthorSignatureMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/DerivedDataMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_EffectMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_EphemeralMessageAttributes.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_FactCheckMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_ForwardVideoTimestampAttribute.swift",
+  "TelegramCore/Sources/SyncCore/GuestChatMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_InlineBotMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_MediaSpoilerMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_NonPremiumMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_NotificationInfoMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_OutgoingMessageInfoAttribute.swift",
+  "TelegramCore/Sources/SyncCore/PaidStarsMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_RestrictedContentMessageAttribute.swift",
+  "TelegramCore/Sources/SyncCore/ScheduledRepeatAttribute.swift",
+  "TelegramCore/Sources/Utils/FlatBuffersUtils.swift",
+  "TelegramCore/Sources/Utils/JSON.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_AutodownloadSettings.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_LocalizationSettings.swift",
+  "TelegramCore/Sources/SyncCore/SyncCore_ReplyMessageAttribute.swift"
+ ],
+ "extract": {
+  "TelegramCore/Sources/TelegramEngine/Themes/ChatThemes.swift": [
+   "ChatTheme"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Payments/Stars.swift": [
+   "CurrencyAmount",
+   "StarsAmount",
+   "StarsSubscriptionPricing",
+   "StarsTransactionReference"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Messages/ChatList.swift": [
+   "EngineChatList"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Messages/Media.swift": [
+   "EngineMedia",
+   "EngineCustomMedia"
+  ],
+  "TelegramCore/Sources/PendingMessages/EnqueueMessage.swift": [
+   "EngineMessageReplySubject",
+   "EngineMessageReplyInnerSubject",
+   "EngineMessageReplyQuote"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Peers/Peer.swift": [
+   "EnginePeer",
+   "EngineRenderedPeer"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Data/PeersData.swift": [
+   "EnginePeerCachedInfoItem",
+   "EngineDisplaySavedChatsAsTopics"
+  ],
+  "TelegramCore/Sources/State/CallSessionManager.swift": [
+   "GroupCallReference"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Payments/StarGifts.swift": [
+   "StarGift"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Utils/StringCodingKey.swift": [
+   "StringCodingKey"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Messages/QuickReplyMessages.swift": [
+   "TelegramAccountConnectedBot",
+   "TelegramBusinessAwayMessage",
+   "TelegramBusinessGreetingMessage",
+   "TelegramBusinessIntro",
+   "TelegramBusinessBotRights",
+   "TelegramBusinessRecipients"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Peers/Birthdays.swift": [
+   "TelegramBirthday"
+  ],
+  "TelegramCore/Sources/Settings/PrivacySettings.swift": [
+   "TelegramDisallowedGifts"
+  ],
+  "TelegramCore/Sources/Utils/TelegramMedia_FlatBuffers.swift": [
+   "TelegramMedia",
+   "TelegramMedia_parse",
+   "TelegramMedia_serialize"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Peers/TelegramEnginePeers.swift": [
+   "TelegramPaidReactionPrivacy",
+   "_internal_decodeStoredChatInterfaceState",
+   "OpaqueChatInterfaceState"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Peers/ShareTheme.swift": [
+   "TelegramShareTheme",
+   "CodedShareTheme"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Wallet/WalletCard.swift": [
+   "WalletCard"
+  ],
+  "TelegramCore/Sources/ApiUtils/TelegramMediaFile.swift": [
+   "dimensionsForFileAttributes",
+   "durationForFileAttributes",
+   "TelegramMediaFile",
+   "telegramMediaFileFromApiDocument"
+  ],
+  "TelegramCore/Sources/Settings/ContentSettings.swift": [
+   "ContentSettings"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Messages/Message.swift": [
+   "EngineMessage"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Data/MessagesData.swift": [
+   "EnginePeerReadCounters"
+  ],
+  "TelegramCore/Sources/State/AccountViewTracker.swift": [
+   "ExtractedChatListItemCachedData"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Messages/MediaArea.swift": [
+   "MediaArea"
+  ],
+  "TelegramCore/Sources/ForumChannels.swift": [
+   "MessageHistoryThreadData",
+   "EngineMessageHistoryThread"
+  ],
+  "TelegramCore/Sources/State/ManagedProxyInfoUpdates.swift": [
+   "PromoChatListItem"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Wallet/WalletNfts.swift": [
+   "WalletNftItem",
+   "WalletNftAttribute",
+   "WalletNftFile"
+  ],
+  "TelegramCore/Sources/ApiUtils/AdMessageAttribute.swift": [
+   "AdMessageAttribute"
+  ],
+  "TelegramCore/Sources/Utils/RichReplyQuote.swift": [
+   "richReplyQuoteTextAndEntities",
+   "appendRichQuoteFlatText",
+   "RichText"
+  ],
+  "TelegramCore/Sources/State/AvailableMessageEffects.swift": [
+   "AvailableMessageEffects"
+  ],
+  "TelegramCore/Sources/ApiUtils/TelegramInvertMediaMessageAttribute.swift": [
+   "InvertMediaMessageAttribute"
+  ],
+  "TelegramCore/Sources/Account/AccountIntermediateState.swift": [
+   "ReferencedReplyMessageIds"
+  ],
+  "TelegramCore/Sources/ApiUtils/TelegramMediaWebpage.swift": [
+   "WebpagePreviewMessageAttribute"
+  ],
+  "TelegramCore/Sources/ApiUtils/ReactionsMessageAttribute.swift": [
+   "mergedMessageReactions",
+   "mergeReactions"
+  ],
+  "TelegramCore/Sources/ApiUtils/TelegramMediaImage.swift": [
+   "telegramMediaImageFromApiPhoto"
+  ],
+  "TelegramCore/Sources/Utils/PeerUtils.swift": [
+   "Peer",
+   "PeerId",
+   "anonymousSavedMessagesId",
+   "TelegramPeerUsername",
+   "RestrictionRule",
+   "RenderedPeer",
+   "Array",
+   "messageMainPeer",
+   "isServicePeer"
+  ],
+  "TelegramCore/Sources/Utils/MessageUtils.swift": [
+   "Message",
+   "MessageFlags",
+   "Array"
+  ],
+  "TelegramCore/Sources/Utils/InstantPageReferencedUsers.swift": [
+   "InstantPage",
+   "collectReferencedUserIds"
+  ],
+  "TelegramCore/Sources/Utils/InstantPageCustomEmoji.swift": [
+   "InstantPage",
+   "visitText",
+   "visitUnit"
+  ],
+  "TelegramCore/Sources/Utils/ImageRepresentationsUtils.swift": [
+   "largestImageRepresentation",
+   "smallestImageRepresentation"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Utils/EnginePostboxCoding.swift": [
+   "EngineChatListTotalUnreadStateCategory",
+   "EngineChatListTotalUnreadStateStats",
+   "EnginePeerSummaryCounterTags",
+   "EngineRawMessage",
+   "EngineItemCollectionId",
+   "EngineRawPeer"
+  ],
+  "TelegramCore/Sources/Network/NetworkType.swift": [
+   "NetworkType",
+   "CellularNetworkType"
+  ],
+  "TelegramCore/Sources/Network/FetchedMediaResource.swift": [
+   "MediaResourceUserLocation"
+  ],
+  "TelegramCore/Sources/ChatInputContent/ChatInputContentModel.swift": [
+   "chatInputCodeLanguageForSending"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Messages/ReplyThreadHistory.swift": [
+   "ChatReplyThreadMessage"
+  ],
+  "TelegramCore/Sources/State/ManagedPeerColorUpdates.swift": [
+   "EngineAvailableColorOptions"
+  ],
+  "TelegramCore/Sources/ApiUtils/TelegramChannel.swift": [
+   "TelegramChannel",
+   "TelegramChannelPermission"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Peers/ChatListFiltering.swift": [
+   "ChatFolderTitle"
+  ],
+  "TelegramCore/Sources/State/PeerInputActivity.swift": [
+   "PeerInputActivity",
+   "EmojiInteraction"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Messages/Stories.swift": [
+   "Stories"
+  ],
+  "TelegramCore/Sources/TelegramEngine/Resources/TelegramEngineResources.swift": [
+   "MediaResourceUserContentType"
+  ],
+  "TelegramCore/Sources/ApiUtils/ApiUtils.swift": [
+   "PeerReference"
+  ],
+  "TelegramCore/Sources/Utils/MediaResourceNetworkStatsTag.swift": [
+   "MediaResourceStatsCategory"
+  ]
+ }
+}

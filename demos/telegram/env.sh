@@ -14,3 +14,10 @@ SWIFTBOARD_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 export TG TG_BUILD
 # swiftc for wasm32 (direct, no SwiftPM host build needed)
 swasm() { swiftc -target wasm32-unknown-wasip1 -sdk "$WASM_SDK/WASI.sdk" -resource-dir "$WASM_SDK/swift.xctoolchain/usr/lib/swift_static" -static-stdlib "$@"; }
+# Extra tools the chat-list build uses (override with env vars):
+#   FLATBUFFERS_DIR: a flatbuffers 24.12.23 checkout with a built `flatc` (https://github.com/google/flatbuffers)
+#   wasm-opt from binaryen (https://github.com/WebAssembly/binaryen) on PATH, or WASM_OPT
+: "${FLATBUFFERS_DIR:=$SWIFTBOARD_ROOT/build/flatbuffers}"
+: "${FLATC:=$FLATBUFFERS_DIR/flatc}"
+export FLATBUFFERS_DIR FLATC
+CLANG=${CLANG:-$(command -v clang || echo "$(dirname "$(command -v swiftc)")/clang")}

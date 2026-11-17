@@ -192,6 +192,8 @@ open class ASDisplayNode: NSObject {
     }
     /// Layer for this node class (subclasses of _ASDisplayLayer make one; other CALayer classes use their own factory).
     open func didLoad() {}
+    /// ASInterfaceStateDelegate hook (Telegram's Texture fork declares it on ASDisplayNode); subclasses may override.
+    open func nodeDidLoad() {}
     open func baseDidInit() {}
 
     private var model: CALayer { _layer ?? pending }
