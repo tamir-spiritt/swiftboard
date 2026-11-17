@@ -1,0 +1,22 @@
+# Methods that are optional requirements of ObjC protocols (UIKit/ASDK delegates); `?(` calls on them are rewritten.
+gestureRecognizerShouldBegin
+gestureRecognizer
+scrollViewDidScroll
+scrollViewDidZoom
+scrollViewWillBeginDragging
+scrollViewWillEndDragging
+scrollViewDidEndDragging
+scrollViewWillBeginDecelerating
+scrollViewDidEndDecelerating
+scrollViewDidEndScrollingAnimation
+viewForZooming
+scrollViewWillBeginZooming
+scrollViewDidEndZooming
+scrollViewShouldScrollToTop
+scrollViewDidScrollToTop
+scrollViewDidChangeAdjustedContentInset
+accessibilityScrollStatus
+accessibilityAttributedScrollStatus
+animationDidStart
+animationDidStop
+scrollViewShouldScroll

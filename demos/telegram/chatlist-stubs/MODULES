@@ -1,0 +1,35 @@
+# Layer-3 module list, in build order: Module: real upstream files (relative to submodules/). Every module also
+# compiles chatlist-stubs/<Module>.swift (the stand-in for what the real files need but the port does not build).
+HierarchyTrackingLayer: Components/HierarchyTrackingLayer/Sources/HierarchyTrackingLayer.swift
+ComponentFlow: ComponentFlow/Source/Base/ChildComponentTransitions.swift ComponentFlow/Source/Base/CombinedComponent.swift ComponentFlow/Source/Base/Component.swift ComponentFlow/Source/Base/ComponentAccessibility.swift ComponentFlow/Source/Base/Environment.swift ComponentFlow/Source/Base/Transition.swift ComponentFlow/Source/Components/Button.swift ComponentFlow/Source/Components/Circle.swift ComponentFlow/Source/Components/HStack.swift ComponentFlow/Source/Components/Image.swift ComponentFlow/Source/Components/LazyList.swift ComponentFlow/Source/Components/List.swift ComponentFlow/Source/Components/Rectangle.swift ComponentFlow/Source/Components/RoundedRectangle.swift ComponentFlow/Source/Components/Text.swift ComponentFlow/Source/Components/TransformContents.swift ComponentFlow/Source/Components/VStack.swift ComponentFlow/Source/Components/ZStack.swift ComponentFlow/Source/Gestures/Gesture.swift ComponentFlow/Source/Gestures/LongPressGesture.swift ComponentFlow/Source/Gestures/PanGesture.swift ComponentFlow/Source/Gestures/TapGesture.swift ComponentFlow/Source/Host/ComponentHostView.swift ComponentFlow/Source/Host/NavigationLayoutEnvironment.swift ComponentFlow/Source/Host/RootHostView.swift ComponentFlow/Source/Utils/ActionSlot.swift ComponentFlow/Source/Utils/Color.swift ComponentFlow/Source/Utils/Condition.swift ComponentFlow/Source/Utils/EscapeGuard.swift ComponentFlow/Source/Utils/Insets.swift ComponentFlow/Source/Utils/Rect.swift ComponentFlow/Source/Utils/Size.swift
+Postbox:
+TelegramCore:
+TelegramUIPreferences:
+PresentationStrings:
+TelegramPresentationData: TelegramPresentationData/Sources/PresentationsResourceCache.swift TelegramPresentationData/Sources/PresentationTheme.swift TelegramPresentationData/Sources/DefaultDayPresentationTheme.swift TelegramPresentationData/Sources/Resources/PresentationResourceKey.swift TelegramPresentationData/Sources/Resources/PresentationResourcesChatList.swift TelegramPresentationData/Sources/Resources/PresentationResourcesItemList.swift
+CheckNode:
+ManagedAnimationNode:
+ItemListUI: ItemListUI/Sources/ItemListRevealMotion.swift ItemListUI/Sources/ItemListRevealTouchGestureRecognizer.swift ItemListUI/Sources/ItemListRevealOptionsNode.swift ItemListUI/Sources/ItemListSelectableControlNode.swift ItemListUI/Sources/ItemListEditableReorderControlNode.swift ItemListUI/Sources/Items/ItemListEditableItem.swift
+PresentationDataUtils:
+AvatarNode:
+TelegramStringFormatting:
+AccountContext:
+PeerOnlineMarkerNode: PeerOnlineMarkerNode/Sources/PeerOnlineMarkerNode.swift
+LocalizedPeerData:
+PeerPresenceStatusManager:
+PhotoResources:
+ContextUI:
+ChatInterfaceState:
+TextFormat:
+InvisibleInkDustNode:
+GalleryUI:
+TextNodeWithEntities:
+EmojiStatusComponent:
+AvatarVideoNode:
+MultilineTextComponent:
+MultilineTextWithEntitiesComponent:
+ShimmerEffect:
+GlassBackgroundComponent:
+LegacyComponents:
+RadialStatusNode:
+ChatTitleActivityNode:

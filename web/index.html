@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>/* the raw publication host forwards visitors to the public name (the proxy itself fetches HTML, so no loop) */
+if (location.hostname === 'swiftboard-sq0sa.spiritt.app') location.replace('https://swiftboard.spiritt.app' + location.pathname.replace(/^\/_releases\/[^/]+/, '') + location.search + location.hash);</script>
+<link rel="canonical" href="https://swiftboard.spiritt.app/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swiftboard · iOS for the web</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23F05138'/><path d='M9 19c5 4 11 3 14-2-2 6-9 8-14 2z' fill='white'/></svg>">
+</head>
+<body>
+<div id="app">
+  <aside id="left">
+    <div class="proj">
+      <div class="proj-icon">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#fff" d="M17.3 15.1c1.9-3.3.9-7.6-2.6-10.2 2.2 2.9 2.7 6.4 1.4 8.6-2.8-1.9-6.2-4.9-8.3-7.4 1.5 2.4 3.6 4.6 5.7 6.4-2.1-1.3-4.7-3.2-6.5-5.1 2.2 3.4 5.6 6.5 8.4 8.2-2.4 1.3-6.3 1-9.6-1.3 2.2 3.1 6.5 4.8 10 3.6 1.4-.5 2.4.1 3 1-.1-1.4-.6-2.8-1.5-3.8z"/></svg>
+      </div>
+      <div>
+        <div class="proj-name">Swiftboard</div>
+        <div class="proj-sub" id="projSub">SwiftUI · loading…</div>
+      </div>
+    </div>
+    <div class="side-section">
+      <div class="side-h">Frames <span class="hint">⌘C ⌘V to branch</span></div>
+      <div id="frameList"></div>
+    </div>
+    <div class="side-section">
+      <div class="side-h">Examples <span class="hint">click to add</span></div>
+      <div id="examples" class="ex"></div>
+    </div>
+    <div class="side-section">
+      <div class="side-h">Bring your own SwiftUI</div>
+      <div class="imp">
+        <button id="impDir" class="btn">📁 Open project folder</button>
+        <button id="impFiles" class="btn">Open .swift files</button>
+        <button id="newApp" class="btn">＋ New blank app</button>
+        <div class="muted">or drag a folder onto the board. Each <code>#Preview</code> becomes a frame. Compiled UIKit apps (<code>.wasm</code>) open as live frames too.</div>
+      </div>
+    </div>
+    <div class="side-section">
+      <div class="side-h">How it works</div>
+      <div class="howto">
+        <p><b>Real Swift.</b> Each frame runs the app's SwiftUI source, interpreted by a Rust engine compiled to WebAssembly. No simulator, no Mac.</p>
+        <p><b>Click around.</b> Frames are live: tap chats, type, send, switch tabs, scroll.</p>
+        <p><b>Select elements</b> to restyle; edits are written back into the Swift code.</p>
+        <p><b>Copy + paste a frame</b> to fork the whole codebase. Each branch evolves on its own.</p>
+      </div>
+    </div>
+    <div class="side-foot">
+      <div class="foot-row">
+        <div id="stats">engine idle</div>
+        <button id="resetAll" class="ghost">Reset board</button>
+      </div>
+      <a class="built" href="https://spiritt.ai/?utm_source=swiftboard&utm_medium=app&utm_campaign=built_with" target="_blank" rel="noopener">
+        <span>Built using</span><img src="assets/spiritt-logo.svg" alt="SPIRITT" height="14">
+      </a>
+    </div>
+  </aside>
+
+  <main id="board">
+    <div id="world"></div>
+    <div id="overlay"></div>
+    <div id="toolbar">
+      <button id="tSelect" class="tool" title="Select elements (V)">
+        <svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg><span>Select elements</span>
+      </button>
+      <div class="sep"></div>
+      <button id="tFit" class="tool" title="Zoom to fit (1)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Fit</span></button>
+      <button id="tFull" class="tool" title="Full screen"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg><span>Full screen</span></button>
+      <div class="sep"></div>
+      <button id="tOut" class="tool sq" title="Zoom out">−</button>
+      <div id="zoom">60%</div>
+      <button id="tIn" class="tool sq" title="Zoom in">+</button>
+    </div>
+    <div id="toast"></div>
+  </main>
+
+  <aside id="right">
+    <div class="rtabs">
+      <button data-tab="design" class="on">Design</button>
+      <button data-tab="code">Code</button>
+      <div class="flex"></div>
+      <a id="gh" class="gh" href="https://github.com/tamir-spiritt/swiftboard" target="_blank" rel="noopener" title="Source on GitHub">
+        <svg viewBox="0 0 16 16" width="16" height="16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        <span>GitHub</span>
+      </a>
+      <button id="share" class="share">Share</button>
+    </div>
+    <div id="panel"></div>
+  </aside>
+</div>
+<div id="fs" hidden><div id="fsInner"></div><button id="fsClose">Close</button></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

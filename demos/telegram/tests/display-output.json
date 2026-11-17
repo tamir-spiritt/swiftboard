@@ -1,0 +1,345 @@
+{
+    "class": "CALayer",
+    "frame": [
+        0,
+        0,
+        390,
+        240
+    ],
+    "backgroundColor": "rgba(255,255,255,1.0)",
+    "sublayers": [
+        {
+            "class": "_ASDisplayLayer",
+            "tag": "ASDisplayNode",
+            "frame": [
+                0,
+                0,
+                390,
+                240
+            ],
+            "backgroundColor": "rgba(247,247,247,1.0)",
+            "sublayers": [
+                {
+                    "class": "_ASDisplayLayer",
+                    "tag": "ASImageNode",
+                    "frame": [
+                        16,
+                        16,
+                        56,
+                        56
+                    ],
+                    "contentsScale": 3,
+                    "contents": {
+                        "width": 168,
+                        "height": 168,
+                        "kind": "recording",
+                        "ops": [
+                            [
+                                "concat",
+                                [
+                                    3,
+                                    0,
+                                    0,
+                                    3,
+                                    0,
+                                    0
+                                ]
+                            ],
+                            [
+                                "concat",
+                                [
+                                    1,
+                                    0,
+                                    0,
+                                    1,
+                                    28,
+                                    28
+                                ]
+                            ],
+                            [
+                                "concat",
+                                [
+                                    1,
+                                    0,
+                                    0,
+                                    -1,
+                                    0,
+                                    0
+                                ]
+                            ],
+                            [
+                                "concat",
+                                [
+                                    1,
+                                    0,
+                                    0,
+                                    1,
+                                    -28,
+                                    -28
+                                ]
+                            ],
+                            [
+                                "clear",
+                                [
+                                    0,
+                                    0,
+                                    56,
+                                    56
+                                ]
+                            ],
+                            [
+                                "fillColor",
+                                "rgba(42,171,238,1.0)"
+                            ],
+                            [
+                                "fill",
+                                "M56 28C56 43.46 43.46 56 28 56C12.53 56 0 43.46 0 28C0 12.53 12.53 0 28 0C43.46 0 56 12.53 56 28Z",
+                                "nonzero"
+                            ],
+                            [
+                                "concat",
+                                [
+                                    1,
+                                    0,
+                                    0,
+                                    1,
+                                    28,
+                                    28
+                                ]
+                            ],
+                            [
+                                "concat",
+                                [
+                                    1,
+                                    0,
+                                    0,
+                                    -1,
+                                    0,
+                                    0
+                                ]
+                            ],
+                            [
+                                "concat",
+                                [
+                                    1,
+                                    0,
+                                    0,
+                                    1,
+                                    -28,
+                                    -28
+                                ]
+                            ]
+                        ]
+                    }
+                },
+                {
+                    "class": "_ASDisplayLayer",
+                    "tag": "ImmediateTextNode",
+                    "frame": [
+                        84,
+                        18,
+                        75,
+                        20
+                    ],
+                    "backgroundColor": "rgba(0,0,0,0.0)",
+                    "contentsScale": 3,
+                    "contents": {
+                        "width": 225,
+                        "height": 60,
+                        "kind": "recording",
+                        "ops": [
+                            [
+                                "concat",
+                                [
+                                    1,
+                                    0,
+                                    0,
+                                    1,
+                                    0,
+                                    60
+                                ]
+                            ],
+                            [
+                                "concat",
+                                [
+                                    3,
+                                    0,
+                                    0,
+                                    -3,
+                                    0,
+                                    0
+                                ]
+                            ],
+                            [
+                                "blend",
+                                "copy"
+                            ],
+                            [
+                                "fillColor",
+                                "rgba(0,0,0,0.0)"
+                            ],
+                            [
+                                "fill",
+                                "M0 0L75 0L75 20L0 20Z",
+                                "nonzero"
+                            ],
+                            [
+                                "blend",
+                                "source-over"
+                            ],
+                            [
+                                "text",
+                                "Telegram",
+                                "600 17.0px -apple-system, \"SF Pro Text\", \"Helvetica Neue\", system-ui, sans-serif",
+                                [
+                                    0,
+                                    16
+                                ],
+                                [
+                                    1,
+                                    0,
+                                    0,
+                                    -1,
+                                    0,
+                                    0
+                                ],
+                                "rgba(0,0,0,1.0)"
+                            ],
+                            [
+                                "blend",
+                                "source-over"
+                            ]
+                        ]
+                    }
+                },
+                {
+                    "class": "_ASDisplayLayer",
+                    "tag": "TextNode",
+                    "frame": [
+                        84,
+                        42,
+                        290,
+                        38
+                    ],
+                    "backgroundColor": "rgba(0,0,0,0.0)",
+                    "contentsScale": 3,
+                    "contents": {
+                        "width": 870,
+                        "height": 114,
+                        "kind": "recording",
+                        "ops": [
+                            [
+                                "concat",
+                                [
+                                    1,
+                                    0,
+                                    0,
+                                    1,
+                                    0,
+                                    114
+                                ]
+                            ],
+                            [
+                                "concat",
+                                [
+                                    3,
+                                    0,
+                                    0,
+                                    -3,
+                                    0,
+                                    0
+                                ]
+                            ],
+                            [
+                                "blend",
+                                "copy"
+                            ],
+                            [
+                                "fillColor",
+                                "rgba(0,0,0,0.0)"
+                            ],
+                            [
+                                "fill",
+                                "M0 0L290 0L290 38L0 38Z",
+                                "nonzero"
+                            ],
+                            [
+                                "blend",
+                                "source-over"
+                            ],
+                            [
+                                "text",
+                                "Running the real Telegram iOS Display ",
+                                "400 15.0px -apple-system, \"SF Pro Text\", \"Helvetica Neue\", system-ui, sans-serif",
+                                [
+                                    0,
+                                    14
+                                ],
+                                [
+                                    1,
+                                    0,
+                                    0,
+                                    -1,
+                                    0,
+                                    0
+                                ],
+                                "rgba(142,142,147,1.0)"
+                            ],
+                            [
+                                "text",
+                                "module, compiled by the Swift compiler to",
+                                "400 15.0px -apple-system, \"SF Pro Text\", \"Helvetica Neue\", system-ui, sans-serif",
+                                [
+                                    0,
+                                    33
+                                ],
+                                [
+                                    1,
+                                    0,
+                                    0,
+                                    -1,
+                                    0,
+                                    0
+                                ],
+                                "rgba(142,142,147,1.0)"
+                            ],
+                            [
+                                "text",
+                                "\u2026",
+                                "400 15.0px -apple-system, \"SF Pro Text\", \"Helvetica Neue\", system-ui, sans-serif",
+                                [
+                                    281.4,
+                                    33
+                                ],
+                                [
+                                    1,
+                                    0,
+                                    0,
+                                    -1,
+                                    0,
+                                    0
+                                ],
+                                "fill"
+                            ],
+                            [
+                                "blend",
+                                "source-over"
+                            ]
+                        ]
+                    }
+                },
+                {
+                    "class": "_ASDisplayLayer",
+                    "tag": "ASDisplayNode",
+                    "frame": [
+                        84,
+                        87.5,
+                        306,
+                        0.5
+                    ],
+                    "backgroundColor": "rgba(200,199,204,1.0)"
+                }
+            ]
+        }
+    ]
+}

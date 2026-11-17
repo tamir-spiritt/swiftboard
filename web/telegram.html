@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Telegram iOS on WebAssembly · Swiftboard</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #e9e9ee; font: 14px -apple-system, system-ui, sans-serif; color: #333; }
+  main { display: flex; gap: 40px; align-items: flex-start; justify-content: center; padding: 32px; }
+  .device { padding: 12px; background: #111; border-radius: 67px; box-shadow: 0 30px 80px rgba(0,0,0,.25), inset 0 0 0 2px #333; }
+  .screen { border-radius: 55px; overflow: hidden; background: #fff; width: 390px; height: 844px; position: relative; }
+  canvas { display: block; }
+  aside { width: 360px; }
+  h1 { font-size: 20px; margin: 8px 0 4px; }
+  #log { font: 12px ui-monospace, Menlo, monospace; background: #fff; border-radius: 10px; padding: 10px; height: 420px; overflow: auto; white-space: pre-wrap; }
+  #stats { margin: 10px 0; color: #666; }
+</style>
+<script type="module" src="telegram.js"></script>
+</head>
+<body>
+<main>
+  <div class="device"><div class="screen"><canvas id="screen"></canvas></div></div>
+  <aside>
+    <h1>Telegram iOS, real source, on WebAssembly</h1>
+    <p>Telegram's own Swift code (Display, AsyncDisplayKit API) compiled by the Swift compiler to wasm, painted by Swiftboard.</p>
+    <div id="stats">loading…</div>
+    <div id="log"></div>
+  </aside>
+</main>
+</body>
+</html>

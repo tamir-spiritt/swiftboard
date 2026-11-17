@@ -1,0 +1,5 @@
+engine/target/
+dist/
+.spiritt/
+build/
+*.wasm

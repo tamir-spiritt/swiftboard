@@ -1,0 +1,18 @@
+[package]
+name = "swiftboard"
+version = "0.1.0"
+edition = "2021"
+description = "A Swift + SwiftUI interpreter and layout engine that renders iOS apps in the browser via WebAssembly"
+license = "MIT"
+repository = "https://github.com/tamir-spiritt/swiftboard"
+readme = "../README.md"
+keywords = ["swift", "swiftui", "wasm", "ios", "interpreter"]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
