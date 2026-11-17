@@ -8,7 +8,7 @@ No simulator. No Mac. No Xcode builds.
 
 [**Live demo →**](https://swiftboard.spiritt.app/) &nbsp;·&nbsp; [Examples](#examples) &nbsp;·&nbsp; [How it works](#how-it-works) &nbsp;·&nbsp; [Help wanted](#help-wanted)
 
-<a href="https://spiritt.ai/go/workspaces?ref=github-swiftboard&v=agents&p=Deploy+Swiftboard+for+me%3A+clone+https%3A%2F%2Fgithub.com%2Ftamir-spiritt%2Fswiftboard%2C+follow+its+AGENTS.md+%28build+the+Rust+engine+to+WebAssembly+with+tools%2Fbuild.sh%2C+then+publish+the+dist%2F+folder+as+a+static+site+with+spiritt+deploy%29+and+send+me+the+live+link+once+it+loads."><img src="docs/deploy-on-spiritt.svg" alt="Deploy on SPIRITT" height="36"></a>
+<a href="https://spiritt.ai/go/workspaces?ref=github-swiftboard&v=agents&p=Deploy+Swiftboard+for+me%3A+clone+https%3A%2F%2Fgithub.com%2Ftamir-spiritt%2Fswiftboard%2C+follow+its+AGENTS.md+%28build+the+Rust+engine+to+WebAssembly+with+tools%2Fbuild.sh%2C+then+publish+the+dist%2F+folder+as+a+static+site+with+spiritt+deploy%29+and+send+me+the+live+link+once+it+loads."><img src="docs/deploy-button.svg" alt="Deploy on SPIRITT" height="36"></a>
 
 <img src="docs/board.png" alt="Swiftboard: live SwiftUI frames on a design board" width="100%">
 
